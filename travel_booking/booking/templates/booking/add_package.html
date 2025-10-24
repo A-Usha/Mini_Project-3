@@ -1,0 +1,13 @@
+{% extends "booking/base.html" %}
+{% block content %}
+<h3 class="mb-3">{% if package %}Edit{% else %}Add{% endif %} Package</h3>
+<form method="post">{% csrf_token %}
+  <input type="text" name="title" value="{{ package.title|default:'' }}" placeholder="Title" class="form-control mb-2">
+  <textarea name="description" placeholder="Description" class="form-control mb-2">{{ package.description|default:'' }}</textarea>
+  <input type="text" name="price" value="{{ package.price|default:'' }}" placeholder="Price" class="form-control mb-2">
+  <input type="text" name="duration" value="{{ package.duration|default:'' }}" placeholder="Duration" class="form-control mb-2">
+  <input type="text" name="destination" value="{{ package.destination|default:'' }}" placeholder="Destination" class="form-control mb-2">
+  <input type="number" name="available_seats" value="{{ package.available_seats|default:'' }}" placeholder="Seats" class="form-control mb-2">
+  <button class="btn btn-success w-100">Save</button>
+</form>
+{% endblock %}

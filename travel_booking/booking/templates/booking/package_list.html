@@ -1,0 +1,19 @@
+{% extends "booking/base.html" %}
+{% block content %}
+<h3 class="mb-3">All Packages</h3>
+<a href="{% url 'add_package' %}" class="btn btn-success mb-3">Add New</a>
+<table class="table table-dark table-bordered">
+  <tr><th>Title</th><th>Destination</th><th>Price</th><th>Actions</th></tr>
+  {% for p in packages %}
+  <tr>
+    <td>{{ p.title }}</td>
+    <td>{{ p.destination }}</td>
+    <td>{{ p.price }}</td>
+    <td>
+      <a href="{% url 'update_package' p.id %}" class="btn btn-warning btn-sm">Edit</a>
+      <a href="{% url 'delete_package' p.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

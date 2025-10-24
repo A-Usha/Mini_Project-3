@@ -1,0 +1,41 @@
+{% extends "booking/base.html" %}
+{% block content %}
+<div class="col-md-6 mx-auto">
+  <h3 class="text-center mb-3">{% if travel %}Update{% else %}Add{% endif %} Travel Option</h3>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-2">
+      <label>Mode</label>
+      <select name="mode" class="form-control" required>
+        {% for val, label in [('Flight','Flight'),('Bus','Bus'),('Train','Train'),('Cab','Cab')] %}
+          <option value="{{ val }}" {% if travel and travel.mode == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-2">
+      <label>Source</label>
+      <input type="text" name="source" class="form-control" value="{{ travel.source|default:'' }}" required>
+    </div>
+    <div class="mb-2">
+      <label>Destination</label>
+      <input type="text" name="destination" class="form-control" value="{{ travel.destination|default:'' }}" required>
+    </div>
+    <div class="mb-2">
+      <label>Price</label>
+      <input type="number" name="price" class="form-control" value="{{ travel.price|default:'' }}" required>
+    </div>
+    <div class="mb-2">
+      <label>Available Seats</label>
+      <input type="number" name="available_seats" class="form-control" value="{{ travel.available_seats|default:'' }}">
+    </div>
+    <div class="mb-3">
+      <label>Image</label>
+      <input type="file" name="image" class="form-control">
+      {% if travel and travel.image %}
+        <img src="{{ travel.image.url }}" style="width:100px;margin-top:10px;">
+      {% endif %}
+    </div>
+    <button class="btn btn-primary w-100">{% if travel %}Update{% else %}Add{% endif %}</button>
+  </form>
+</div>
+{% endblock %}

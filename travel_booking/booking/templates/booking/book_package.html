@@ -1,0 +1,9 @@
+{% extends "booking/base.html" %}
+{% block content %}
+<h3>Book Package: {{ package.title }}</h3>
+<form method="post">{% csrf_token %}
+  <label>Travel Date</label>
+  <input type="date" name="travel_date" class="form-control mb-3" required>
+  <button class="btn btn-success">Confirm Booking</button>
+</form>
+{% endblock %}

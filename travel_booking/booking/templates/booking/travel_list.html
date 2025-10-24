@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container text-center mt-5">
+  <h2 class="mb-4 text-light">Available Travel Options</h2>
+
+  <div class="row justify-content-center">
+    {% for travel in travels %}
+      <div class="col-md-3 mb-4">
+        <div class="card bg-dark text-light shadow-lg h-100">
+          {% if travel.image %}
+            <img src="{{ travel.image.url }}" class="card-img-top" alt="{{ travel.mode }}" style="height:180px;object-fit:cover;">
+          {% else %}
+            <img src="https://via.placeholder.com/300x180?text=No+Image" class="card-img-top" alt="No image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title text-warning">{{ travel.mode }}</h5>
+            <p class="card-text">{{ travel.source }} → {{ travel.destination }}</p>
+            <p>₹ {{ travel.price }}</p>
+            <p>Seats: {{ travel.available_seats }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No travel systems found.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

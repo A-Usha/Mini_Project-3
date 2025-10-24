@@ -1,0 +1,40 @@
+{% extends 'booking/base.html' %}
+{% block content %}
+
+<div class="container text-center mt-5">
+  <h1 class="text-light mb-4">Welcome to TravelBooker</h1>
+
+  <!-- 🌍 Search Bar (only on Home page after login) -->
+  {% if user.is_authenticated %}
+  <form class="d-flex justify-content-center mb-5" method="get" action="{% url 'search' %}">
+    <input class="form-control me-2 w-50" type="search" placeholder="Search travel (bus, flight, etc.)..." name="q" style="background:#333;color:#fff;border:none;">
+    <button class="btn btn-outline-light" type="submit">Search</button>
+  </form>
+  {% endif %}
+
+  <!-- ✈️ Travel Systems Section -->
+  <h3 class="text-warning mb-4">Available Travel Systems</h3>
+  <div class="row justify-content-center">
+    {% for travel in travels %}
+      <div class="col-md-3 mb-4">
+        <div class="card bg-dark text-light shadow-lg h-100">
+          {% if travel.image %}
+            <img src="{{ travel.image.url }}" class="card-img-top" alt="{{ travel.mode }}" style="height:180px;object-fit:cover;">
+          {% else %}
+            <img src="https://via.placeholder.com/300x180?text=No+Image" class="card-img-top" alt="No image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title text-warning">{{ travel.mode }}</h5>
+            <p class="card-text">{{ travel.source }} → {{ travel.destination }}</p>
+            <p>₹ {{ travel.price }}</p>
+            <p>Seats: {{ travel.available_seats }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-secondary">No travel systems found.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

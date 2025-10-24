@@ -1,0 +1,43 @@
+{% extends 'booking/base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+  {% if query %}
+    <h2 class="mb-4">Search Results for "<span style="color:#0dcaf0;">{{ query }}</span>"</h2>
+  {% else %}
+    <h2 class="mb-4">Search Travel Options</h2>
+  {% endif %}
+
+  {% if results %}
+    <div class="row justify-content-center">
+      {% for travel in results %}
+        <div class="col-md-4 mb-4">
+          <div class="card bg-dark text-light shadow-lg border-0" style="border-radius: 15px;">
+            {% if travel.image %}
+              <img src="{{ travel.image.url }}" class="card-img-top" alt="{{ travel.mode }}" style="height:200px;object-fit:cover;border-top-left-radius:15px;border-top-right-radius:15px;">
+            {% else %}
+              <div style="height:200px;background:#444;border-top-left-radius:15px;border-top-right-radius:15px;display:flex;align-items:center;justify-content:center;">
+                <span style="color:#aaa;">No Image Available</span>
+              </div>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title text-info text-uppercase">{{ travel.mode }}</h5>
+              <p class="card-text mb-2">
+                <strong>From:</strong> {{ travel.source }}<br>
+                <strong>To:</strong> {{ travel.destination }}
+              </p>
+              <p class="card-text">
+                💰 <strong>₹{{ travel.price }}</strong><br>
+                🚍 Available Seats: {{ travel.available_seats }}
+              </p>
+              <a href="{% url 'travel_list' %}" class="btn btn-outline-info btn-sm mt-2">View All</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted mt-5">No matching travel options found. Try another keyword!</p>
+  {% endif %}
+</div>
+{% endblock %}
